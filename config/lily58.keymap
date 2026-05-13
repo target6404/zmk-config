@@ -1,0 +1,142 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/keys.h>
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+
+        combo_q {
+            bindings = <&kp Q>;
+            key-positions = <13 16>;
+            layers = <4>;
+        };
+    };
+
+    behaviors {
+        ss_hs_modmorph: ss_hs_modmorph {
+            compatible = "zmk,behavior-mod-morph";
+            label = "SS_HS_MODMORPH";
+            bindings = <&kp M>, <&kp RIGHT_BRACKET>;
+
+            #binding-cells = <0>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        kh_hs_tapdance: kh_hs_tapdance {
+            compatible = "zmk,behavior-tap-dance";
+            label = "KH_HS_TAPDANCE";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LEFT_BRACKET>, <&kp RIGHT_BRACKET>;
+        };
+
+        hrm: hrm {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <200>;
+            require-prior-idle-ms = <125>;
+            bindings = <&kp>, <&kp>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            // ------------------------------------------------------------------------------------------------------------
+            // |  ESC  |  1  |  2  |  3   |  4   |  5   |                   |  6   |  7    |  8    |  9   |   0   |   `   |
+            // |  TAB  |  Q  |  W  |  E   |  R   |  T   |                   |  Y   |  U    |  I    |  O   |   P   |   -   |
+            // |  CTRL |  A  |  S  |  D   |  F   |  G   |                   |  H   |  J    |  K    |  L   |   ;   |   '   |
+            // | SHIFT |  Z  |  X  |  C   |  V   |  B   |   "["  |  |  "]"  |  N   |  M    |  ,    |  .   |   /   | SHIFT |
+            //                     | ALT  | GUI  | LOWER|  SPACE |  | ENTER | RAISE| BSPC  | GUI   |
+
+            bindings = <
+&kp ESC        &kp N1  &kp N2  &kp N3            &kp N4     &kp N5                                 &kp N6         &kp N7        &kp N8             &kp N9   &kp N0    &kp MINUS
+&kp TAB        &kp Q   &kp W   &kp E             &kp R      &kp T                                  &kp Y          &kp U         &kp I              &kp O    &kp P     &kp BACKSLASH
+&kp BACKSPACE  &kp A   &kp S   &kp D             &kp F      &kp G                                  &kp H          &kp J         &kp K              &kp L    &kp SEMI  &kp SQT
+&kp LSHFT      &kp Z   &kp X   &kp C             &kp V      &kp B         &lt 3 Y     &lt 1 EQUAL  &kp N          &kp M         &kp COMMA          &kp DOT  &kp FSLH  &kp RIGHT_SHIFT
+                               &kp LEFT_CONTROL  &kp SPACE  &kp LEFT_ALT  &kp LGUI    &kp RET      &kp RIGHT_ALT  &kp KP_ENTER  &kp RIGHT_CONTROL
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        lower_layer {
+            // ------------------------------------------------------------------------------------------------------------
+            // | BTCLR | BT1 | BT2 |  BT3 |  BT4 |  BT5 |                   |      |       |       |      |       |       |
+            // |  F1   |  F2 |  F3 |  F4  |  F5  |  F6  |                   |  F7  |  F8   |  F9   |  F10 |  F11  |  F12  |
+            // |   `   |  !  |  @  |  #   |  $   |  %   |                   |  ^   |  &    |  *    |  (   |   )   |   ~   |
+            // |       |     |     |      |      |      |        |  |       |      |  _    |  +    |  {   |   }   |  "|"  |
+            //                     |      |      |      |        |  |       |      |       |       |
+
+            bindings = <
+&bt BT_CLR  &bt BT_SEL 0      &bt BT_SEL 1       &bt BT_SEL 2       &bt BT_SEL 3  &bt BT_SEL 4                    &trans     &trans     &trans     &trans    &trans    &trans
+&kp F1      &kp F2            &kp F3             &kp F4             &kp F5        &kp F6                          &trans     &trans     &trans     &kp LBKT  &kp RBKT  &kp GRAVE
+&kp F7      &kp F8            &kp F9             &kp F10            &kp F11       &kp F12                         &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp TILDE
+&trans      &ext_power EP_ON  &ext_power EP_OFF  &ext_power EP_TOG  &trans        &trans        &to 4     &trans  &trans     &kp MINUS  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE
+                                                 &trans             &trans        &trans        &trans    &to 0   &trans     &trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        raise_layer {
+            // ------------------------------------------------------------------------------------------------------------
+            // |       |     |     |      |      |      |                   |      |       |       |      |       |       |
+            // |   `   |  1  |  2  |  3   |  4   |  5   |                   |  6   |   7   |   8   |  9   |   0   |       |
+            // |   F1  |  F2 |  F3 |  F4  |  F5  |  F6  |                   |      |   <-  |   v   |  ^   |  ->   |       |
+            // |   F7  |  F8 |  F9 |  F10 |  F11 |  F12 |        |  |       |  +   |   -   |   =   |  [   |   ]   |   \   |
+            //                     |      |      |      |        |  |       |      |       |       |
+
+            bindings = <
+&trans     &trans  &trans  &trans   &trans   &trans                     &trans       &trans     &trans     &trans    &trans     &trans
+&kp GRAVE  &kp N1  &kp N2  &kp N3   &kp N4   &kp N5                     &kp N6       &kp N7     &kp N8     &kp N9    &kp N0     &trans
+&kp F1     &kp F2  &kp F3  &kp F4   &kp F5   &kp F6                     &trans       &kp LEFT   &kp DOWN   &kp UP    &kp RIGHT  &trans
+&kp F7     &kp F8  &kp F9  &kp F10  &kp F11  &kp F12  &trans    &trans  &kp KP_PLUS  &kp MINUS  &kp EQUAL  &kp LBKT  &kp RBKT   &kp BSLH
+                           &trans   &trans   &trans   &trans    &trans  &trans       &trans     &trans
+            >;
+
+            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+        };
+
+        mirrored_layer {
+            bindings = <
+&trans    &kp N0    &kp N9   &kp N8     &kp N7  &kp N6                    &trans  &trans  &trans  &trans  &trans  &trans
+&kp BSLH  &kp P     &kp O    &kp I      &kp U   &kp Y                     &trans  &trans  &trans  &trans  &trans  &trans
+&kp SQT   &kp SEMI  &kp L    &kp K      &kp J   &kp H                     &trans  &trans  &trans  &trans  &trans  &trans
+&trans    &kp FSLH  &kp DOT  &kp COMMA  &kp M   &kp N   &trans    &trans  &trans  &trans  &trans  &trans  &trans  &trans
+                             &trans     &trans  &trans  &trans    &trans  &trans  &trans  &trans
+            >;
+        };
+
+        epinephrine_layer {
+            bindings = <
+&kp ESC    &kp N1  &kp N2  &kp N3     &kp N4            &kp N5                                   &kp N6        &kp N7                &kp N8     &kp N9   &kp N0        &kp DELETE
+&kp TAB    &kp B   &kp M   &kp D      &kp W             &kp V                                    &kp FSLH      &kp F                 &kp O      &kp U    &kp C_REPEAT  &kp BSLH
+&kp BSPC   &kp N   &kp T   &kp H      &kp C             &kp P                                    &kp C_REPEAT  &kp S                 &kp A      &kp E    &kp I         &kp SQT
+&sk LSHFT  &kp X   &kp Z   &kp K      &kp G             &kp J           &trans          &trans   &kp MINUS     &kp Y                 &kp COMMA  &kp DOT  &kp FSLH      &sk RSHFT
+                           &sk LCTRL  &mt LEFT_SHIFT R  &mt LEFT_ALT L  &kp LG(LGUI)    &kp RET  &kp SPACE     &mt SPACE LEFT_SHIFT  &sk RCTRL
+            >;
+        };
+
+        entend_layer {
+            bindings = <
+&trans  &trans      &trans             &trans      &trans         &trans                    &trans         &trans    &trans    &trans     &trans      &trans
+&trans  &kp ESCAPE  &kp K_SCROLL_UP    &kp LC(F)   &trans         &trans                    &kp PAGE_UP    &kp HOME  &kp UP    &kp END    &trans      &kp ESCAPE
+&trans  &kp LC(A)   &kp K_SCROLL_DOWN  &kp K_BACK  &kp K_FORWARD  &trans                    &kp PAGE_DOWN  &kp LEFT  &kp DOWN  &kp RIGHT  &kp DELETE  &trans
+&trans  &kp LC(Z)   &kp LC(X)          &kp LC(C)   &kp LC(V)      &trans  &trans    &trans  &trans         &trans    &trans    &trans     &trans      &trans
+                                       &trans      &trans         &trans  &trans    &trans  &trans         &trans    &trans
+            >;
+        };
+    };
+};
