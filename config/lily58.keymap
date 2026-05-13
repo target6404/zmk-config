@@ -83,7 +83,7 @@
 &bt BT_CLR  &bt BT_SEL 0      &bt BT_SEL 1       &bt BT_SEL 2       &bt BT_SEL 3  &bt BT_SEL 4                    &trans     &trans     &trans     &trans    &trans    &trans
 &kp F1      &kp F2            &kp F3             &kp F4             &kp F5        &kp F6                          &trans     &trans     &trans     &kp LBKT  &kp RBKT  &kp GRAVE
 &kp F7      &kp F8            &kp F9             &kp F10            &kp F11       &kp F12                         &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR  &kp RPAR  &kp TILDE
-&trans      &ext_power EP_ON  &ext_power EP_OFF  &ext_power EP_TOG  &trans        &trans        &to 4     &trans  &trans     &kp MINUS  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE
+&trans      &ext_power EP_ON  &ext_power EP_OFF  &ext_power EP_TOG  &trans        &trans        &tog 4    &trans  &trans     &kp MINUS  &kp PLUS   &kp LBRC  &kp RBRC  &kp PIPE
                                                  &trans             &trans        &trans        &trans    &to 0   &trans     &trans     &trans
             >;
 
@@ -121,11 +121,11 @@
 
         epinephrine_layer {
             bindings = <
-&kp ESC    &kp N1  &kp N2  &kp N3     &kp N4            &kp N5                                   &kp N6        &kp N7                &kp N8     &kp N9   &kp N0        &kp DELETE
-&kp TAB    &kp B   &kp M   &kp D      &kp W             &kp V                                    &kp FSLH      &kp F                 &kp O      &kp U    &kp C_REPEAT  &kp BSLH
-&kp BSPC   &kp N   &kp T   &kp H      &kp C             &kp P                                    &kp C_REPEAT  &kp S                 &kp A      &kp E    &kp I         &kp SQT
-&sk LSHFT  &kp X   &kp Z   &kp K      &kp G             &kp J           &trans          &trans   &kp MINUS     &kp Y                 &kp COMMA  &kp DOT  &kp FSLH      &sk RSHFT
-                           &sk LCTRL  &mt LEFT_SHIFT R  &mt LEFT_ALT L  &kp LG(LGUI)    &kp RET  &kp SPACE     &mt SPACE LEFT_SHIFT  &sk RCTRL
+&kp ESC    &kp N1  &kp N2  &kp N3     &kp N4            &kp N5                                       &kp N6       &kp N7                &kp N8     &kp N9   &kp N0       &kp DELETE
+&kp TAB    &kp B   &kp M   &kp D      &kp W             &kp V                                        &kp FSLH     &kp F                 &kp O      &kp U    &key_repeat  &kp BSLH
+&kp BSPC   &kp N   &kp T   &kp H      &kp C             &kp P                                        &key_repeat  &kp S                 &kp A      &kp E    &kp I        &kp SQT
+&sk LSHFT  &kp X   &kp Z   &kp K      &kp G             &kp J           &trans          &lt 1 EQUAL  &kp MINUS    &kp Y                 &kp COMMA  &kp DOT  &kp FSLH     &sk RSHFT
+                           &sk LCTRL  &mt LEFT_SHIFT R  &mt LEFT_ALT L  &kp LG(LGUI)    &kp RET      &kp SPACE    &mt LEFT_SHIFT SPACE  &sk RCTRL
             >;
         };
 
